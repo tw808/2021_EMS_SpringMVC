@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.classinfo.mapper.SyllabusInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ems1.po.SyllabusInfo">
+    <id column="syll_id" jdbcType="INTEGER" property="syllId" />
+    <result column="syll_mon" jdbcType="VARCHAR" property="syllMon" />
+    <result column="syll_tue" jdbcType="VARCHAR" property="syllTue" />
+    <result column="syll_wed" jdbcType="VARCHAR" property="syllWed" />
+    <result column="syll_thur" jdbcType="VARCHAR" property="syllThur" />
+    <result column="syll_fri" jdbcType="VARCHAR" property="syllFri" />
+    <result column="syll_sat" jdbcType="VARCHAR" property="syllSat" />
+    <result column="syll_sun" jdbcType="VARCHAR" property="syllSun" />
+    <result column="syll_effective" jdbcType="VARCHAR" property="syllEffective" />
+    <result column="syll_name" jdbcType="VARCHAR" property="syllName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    syll_id, syll_mon, syll_tue, syll_wed, syll_thur, syll_fri, syll_sat, syll_sun, syll_effective, 
+    syll_name
+  </sql>
+
+  <select id="getDisciplineList" parameterType="com.ems1.po.SyllabusInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from syllabus_info
+    <if test="syllName!=null and syllName!=''">
+      where syll_name=#{syllName}
+    </if>  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from syllabus_info
+    where syll_id = #{syllId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from syllabus_info
+    where syll_id = #{syllId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ems1.po.SyllabusInfo">
+    insert into syllabus_info (syll_id, syll_mon, syll_tue, 
+      syll_wed, syll_thur, syll_fri, 
+      syll_sat, syll_sun, syll_effective, 
+      syll_name)
+    values (#{syllId,jdbcType=INTEGER}, #{syllMon,jdbcType=VARCHAR}, #{syllTue,jdbcType=VARCHAR}, 
+      #{syllWed,jdbcType=VARCHAR}, #{syllThur,jdbcType=VARCHAR}, #{syllFri,jdbcType=VARCHAR}, 
+      #{syllSat,jdbcType=VARCHAR}, #{syllSun,jdbcType=VARCHAR}, #{syllEffective,jdbcType=VARCHAR}, 
+      #{syllName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ems1.po.SyllabusInfo">
+    insert into syllabus_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="syllId != null">
+        syll_id,
+      </if>
+      <if test="syllMon != null">
+        syll_mon,
+      </if>
+      <if test="syllTue != null">
+        syll_tue,
+      </if>
+      <if test="syllWed != null">
+        syll_wed,
+      </if>
+      <if test="syllThur != null">
+        syll_thur,
+      </if>
+      <if test="syllFri != null">
+        syll_fri,
+      </if>
+      <if test="syllSat != null">
+        syll_sat,
+      </if>
+      <if test="syllSun != null">
+        syll_sun,
+      </if>
+      <if test="syllEffective != null">
+        syll_effective,
+      </if>
+      <if test="syllName != null">
+        syll_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="syllId != null">
+        #{syllId,jdbcType=INTEGER},
+      </if>
+      <if test="syllMon != null">
+        #{syllMon,jdbcType=VARCHAR},
+      </if>
+      <if test="syllTue != null">
+        #{syllTue,jdbcType=VARCHAR},
+      </if>
+      <if test="syllWed != null">
+        #{syllWed,jdbcType=VARCHAR},
+      </if>
+      <if test="syllThur != null">
+        #{syllThur,jdbcType=VARCHAR},
+      </if>
+      <if test="syllFri != null">
+        #{syllFri,jdbcType=VARCHAR},
+      </if>
+      <if test="syllSat != null">
+        #{syllSat,jdbcType=VARCHAR},
+      </if>
+      <if test="syllSun != null">
+        #{syllSun,jdbcType=VARCHAR},
+      </if>
+      <if test="syllEffective != null">
+        #{syllEffective,jdbcType=VARCHAR},
+      </if>
+      <if test="syllName != null">
+        #{syllName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.SyllabusInfo">
+    update syllabus_info
+    <set>
+      <if test="syllMon != null">
+        syll_mon = #{syllMon,jdbcType=VARCHAR},
+      </if>
+      <if test="syllTue != null">
+        syll_tue = #{syllTue,jdbcType=VARCHAR},
+      </if>
+      <if test="syllWed != null">
+        syll_wed = #{syllWed,jdbcType=VARCHAR},
+      </if>
+      <if test="syllThur != null">
+        syll_thur = #{syllThur,jdbcType=VARCHAR},
+      </if>
+      <if test="syllFri != null">
+        syll_fri = #{syllFri,jdbcType=VARCHAR},
+      </if>
+      <if test="syllSat != null">
+        syll_sat = #{syllSat,jdbcType=VARCHAR},
+      </if>
+      <if test="syllSun != null">
+        syll_sun = #{syllSun,jdbcType=VARCHAR},
+      </if>
+      <if test="syllEffective != null">
+        syll_effective = #{syllEffective,jdbcType=VARCHAR},
+      </if>
+      <if test="syllName != null">
+        syll_name = #{syllName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where syll_id = #{syllId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ems1.po.SyllabusInfo">
+    update syllabus_info
+    set syll_mon = #{syllMon,jdbcType=VARCHAR},
+      syll_tue = #{syllTue,jdbcType=VARCHAR},
+      syll_wed = #{syllWed,jdbcType=VARCHAR},
+      syll_thur = #{syllThur,jdbcType=VARCHAR},
+      syll_fri = #{syllFri,jdbcType=VARCHAR},
+      syll_sat = #{syllSat,jdbcType=VARCHAR},
+      syll_sun = #{syllSun,jdbcType=VARCHAR},
+      syll_effective = #{syllEffective,jdbcType=VARCHAR},
+      syll_name = #{syllName,jdbcType=VARCHAR}
+    where syll_id = #{syllId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.student.mapper.EvaluationInfoMapper">
+    <resultMap id="BaseResultMap" type="com.ems1.po.EvaluationInfo">
+        <id column="eval_id" jdbcType="INTEGER" property="evalId"/>
+        <result column="stu_id" jdbcType="INTEGER" property="stuId"/>
+        <result column="eval_title" jdbcType="VARCHAR" property="evalTitle"/>
+        <result column="eval_content" jdbcType="VARCHAR" property="evalContent"/>
+        <result column="eval_course" jdbcType="VARCHAR" property="evalCourse"/>
+        <result column="eval_teacher" jdbcType="VARCHAR" property="evalTeacher"/>
+        <result column="eval_time" jdbcType="TIMESTAMP" property="evalTime"/>
+        <result column="stu_name" jdbcType="VARCHAR" property="stuName"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    eval_id, stu_id, eval_title, eval_content, eval_course, eval_teacher, eval_time
+  </sql>
+    <select id="getEvalList" parameterType="com.ems1.po.EvaluationInfo" resultMap="BaseResultMap">
+        select a.stu_name, b.*
+        from student_info a, evaluation_info b
+        where a.stu_id=b.stu_id
+        <if test="stuName!=null and stuName!=''">
+            and stu_name=#{stuName}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.stu_name, b.*
+    from student_info a, evaluation_info b
+    where a.stu_id=b.stu_id
+    and b.eval_id=#{evalId, jdbcType=INTEGER}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from evaluation_info
+    where eval_id = #{evalId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ems1.po.EvaluationInfo">
+    insert into evaluation_info (eval_id, stu_id, eval_title, 
+      eval_content, eval_course, eval_teacher, 
+      eval_time)
+    values (#{evalId,jdbcType=INTEGER}, #{stuId,jdbcType=INTEGER}, #{evalTitle,jdbcType=VARCHAR}, 
+      #{evalContent,jdbcType=VARCHAR}, #{evalCourse,jdbcType=VARCHAR}, #{evalTeacher,jdbcType=VARCHAR}, 
+      #{evalTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ems1.po.EvaluationInfo">
+        insert into evaluation_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="evalId != null">
+                eval_id,
+            </if>
+            <if test="stuId != null">
+                stu_id,
+            </if>
+            <if test="evalTitle != null">
+                eval_title,
+            </if>
+            <if test="evalContent != null">
+                eval_content,
+            </if>
+            <if test="evalCourse != null">
+                eval_course,
+            </if>
+            <if test="evalTeacher != null">
+                eval_teacher,
+            </if>
+            <if test="evalTime != null">
+                eval_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="evalId != null">
+                #{evalId,jdbcType=INTEGER},
+            </if>
+            <if test="stuId != null">
+                #{stuId,jdbcType=INTEGER},
+            </if>
+            <if test="evalTitle != null">
+                #{evalTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="evalContent != null">
+                #{evalContent,jdbcType=VARCHAR},
+            </if>
+            <if test="evalCourse != null">
+                #{evalCourse,jdbcType=VARCHAR},
+            </if>
+            <if test="evalTeacher != null">
+                #{evalTeacher,jdbcType=VARCHAR},
+            </if>
+            <if test="evalTime != null">
+                #{evalTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.EvaluationInfo">
+        update evaluation_info
+        <set>
+            <if test="stuId != null">
+                stu_id = #{stuId,jdbcType=INTEGER},
+            </if>
+            <if test="evalTitle != null">
+                eval_title = #{evalTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="evalContent != null">
+                eval_content = #{evalContent,jdbcType=VARCHAR},
+            </if>
+            <if test="evalCourse != null">
+                eval_course = #{evalCourse,jdbcType=VARCHAR},
+            </if>
+            <if test="evalTeacher != null">
+                eval_teacher = #{evalTeacher,jdbcType=VARCHAR},
+            </if>
+            <if test="evalTime != null">
+                eval_time = #{evalTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where eval_id = #{evalId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ems1.po.EvaluationInfo">
+    update evaluation_info
+    set stu_id = #{stuId,jdbcType=INTEGER},
+      eval_title = #{evalTitle,jdbcType=VARCHAR},
+      eval_content = #{evalContent,jdbcType=VARCHAR},
+      eval_course = #{evalCourse,jdbcType=VARCHAR},
+      eval_teacher = #{evalTeacher,jdbcType=VARCHAR},
+      eval_time = #{evalTime,jdbcType=TIMESTAMP}
+    where eval_id = #{evalId,jdbcType=INTEGER}
+  </update>
+</mapper>

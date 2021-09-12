@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.recruitment.mapper.TrackRecInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ems1.po.TrackRecInfo">
+    <id column="track_rec_id" jdbcType="INTEGER" property="trackRecId" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="track_rec_title" jdbcType="VARCHAR" property="trackRecTitle" />
+    <result column="track_rec_content" jdbcType="VARCHAR" property="trackRecContent" />
+    <result column="track_rec_time" jdbcType="TIMESTAMP" property="trackRecTime" />
+    <result column="track_rec_enroll" jdbcType="INTEGER" property="trackRecEnroll" />
+    <result column="next_rec_time" jdbcType="TIMESTAMP" property="nextRecTime" />
+    <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="data_info" jdbcType="VARCHAR" property="dataInfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    track_rec_id, stu_id, track_rec_title, track_rec_content, track_rec_time, track_rec_enroll, 
+    next_rec_time
+  </sql>
+  <select id="getTrackRecList" parameterType="com.ems1.po.TrackRecInfo" resultMap="BaseResultMap">
+    select x.*, y.data_info
+    from (select a.staff_name, b.stu_name, c.*
+    from staff_info a, student_info b, track_rec_info c
+    where a.staff_id=b.staff_id and b.stu_id=c.stu_id
+    <if test="stuId!=null">
+    and c.stu_id=#{stuId}
+    </if>
+    <if test="trackRecEnroll!=null">
+      and c.track_rec_enroll=#{trackRecEnroll}
+    </if>
+    <if test="stuName!=null and stuName!=''">
+      and b.stu_name=#{stuName}
+    </if>
+    ) x
+    join data_dictionary y on x.track_rec_enroll=y.data_id
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+        select x.*, y.data_info
+    from (select a.staff_name, b.stu_name, c.*
+    from staff_info a, student_info b, track_rec_info c
+    where a.staff_id=b.staff_id and b.stu_id=c.stu_id
+    and c.track_rec_id=#{trackRecId}) x
+    join data_dictionary y on x.track_rec_enroll=y.data_id
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from track_rec_info
+    where track_rec_id = #{trackRecId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ems1.po.TrackRecInfo">
+    insert into track_rec_info (track_rec_id, stu_id, track_rec_title, 
+      track_rec_content, track_rec_time, track_rec_enroll, 
+      next_rec_time)
+    values (#{trackRecId,jdbcType=INTEGER}, #{stuId,jdbcType=INTEGER}, #{trackRecTitle,jdbcType=VARCHAR}, 
+      #{trackRecContent,jdbcType=VARCHAR}, #{trackRecTime,jdbcType=TIMESTAMP}, #{trackRecEnroll,jdbcType=INTEGER}, 
+      #{nextRecTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ems1.po.TrackRecInfo">
+    insert into track_rec_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="trackRecId != null">
+        track_rec_id,
+      </if>
+      <if test="stuId != null">
+        stu_id,
+      </if>
+      <if test="trackRecTitle != null">
+        track_rec_title,
+      </if>
+      <if test="trackRecContent != null">
+        track_rec_content,
+      </if>
+      <if test="trackRecTime != null">
+        track_rec_time,
+      </if>
+      <if test="trackRecEnroll != null">
+        track_rec_enroll,
+      </if>
+      <if test="nextRecTime != null">
+        next_rec_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="trackRecId != null">
+        #{trackRecId,jdbcType=INTEGER},
+      </if>
+      <if test="stuId != null">
+        #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="trackRecTitle != null">
+        #{trackRecTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="trackRecContent != null">
+        #{trackRecContent,jdbcType=VARCHAR},
+      </if>
+      <if test="trackRecTime != null">
+        #{trackRecTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trackRecEnroll != null">
+        #{trackRecEnroll,jdbcType=INTEGER},
+      </if>
+      <if test="nextRecTime != null">
+        #{nextRecTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.TrackRecInfo">
+    update track_rec_info
+    <set>
+      <if test="stuId != null">
+        stu_id = #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="trackRecTitle != null">
+        track_rec_title = #{trackRecTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="trackRecContent != null">
+        track_rec_content = #{trackRecContent,jdbcType=VARCHAR},
+      </if>
+      <if test="trackRecTime != null">
+        track_rec_time = #{trackRecTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trackRecEnroll != null">
+        track_rec_enroll = #{trackRecEnroll,jdbcType=INTEGER},
+      </if>
+      <if test="nextRecTime != null">
+        next_rec_time = #{nextRecTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where track_rec_id = #{trackRecId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ems1.po.TrackRecInfo">
+    update track_rec_info
+    set stu_id = #{stuId,jdbcType=INTEGER},
+      track_rec_title = #{trackRecTitle,jdbcType=VARCHAR},
+      track_rec_content = #{trackRecContent,jdbcType=VARCHAR},
+      track_rec_time = #{trackRecTime,jdbcType=TIMESTAMP},
+      track_rec_enroll = #{trackRecEnroll,jdbcType=INTEGER},
+      next_rec_time = #{nextRecTime,jdbcType=TIMESTAMP}
+    where track_rec_id = #{trackRecId,jdbcType=INTEGER}
+  </update>
+</mapper>

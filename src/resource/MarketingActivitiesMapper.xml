@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.marketing.mapper.MarketingActivitiesMapper">
+  <resultMap id="BaseResultMap" type="com.ems1.po.MarketingActivities">
+    <id column="act_id" jdbcType="INTEGER" property="actId" />
+    <result column="staff_id" jdbcType="INTEGER" property="staffId" />
+    <result column="act_name" jdbcType="VARCHAR" property="actName" />
+    <result column="act_status" jdbcType="INTEGER" property="actStatus" />
+    <result column="act_start" jdbcType="TIMESTAMP" property="actStart" />
+    <result column="act_end" jdbcType="TIMESTAMP" property="actEnd" />
+    <result column="act_type" jdbcType="INTEGER" property="actType" />
+    <result column="act_quote" jdbcType="DOUBLE" property="actQuote" />
+    <result column="act_cost" jdbcType="DOUBLE" property="actCost" />
+    <result column="act_react" jdbcType="VARCHAR" property="actReact" />
+    <result column="act_mem" jdbcType="VARCHAR" property="actMem" />
+    <result column="act_desc" jdbcType="VARCHAR" property="actDesc" />
+    <result column="staff_name" jdbcType="VARCHAR" property="staffName"/>
+    <result column="data_info" jdbcType="VARCHAR" property="dataInfo"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    act_id, staff_id, act_name, act_status, act_start, act_end, act_type, act_quote, 
+    act_cost, act_react, act_mem, act_desc
+  </sql>
+  <select id="getMActivList" parameterType="com.ems1.po.MarketingActivities" resultMap="BaseResultMap">
+    select x.*, y.data_info from
+    (select a.*,b.staff_name
+    from marketing_activities a, staff_info b
+    where a.staff_id = b.staff_id) x join
+    data_dictionary y on x.act_status=y.data_id
+    <if test="actName!=null and actName!=''">
+      and x.act_name = #{actName}
+    </if>
+    <if test="actStatus!=null and actStatus!=''">
+      and x.act_status=#{actStatus}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select x.*, y.data_info from
+    (select a.*,b.staff_name
+    from marketing_activities a, staff_info b
+    where a.staff_id = b.staff_id) x join
+    data_dictionary y on x.act_status=y.data_id
+    and x.act_id = #{actId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from marketing_activities
+    where act_id = #{actId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ems1.po.MarketingActivities">
+    insert into marketing_activities (act_id, staff_id, act_name, 
+      act_status, act_start, act_end, 
+      act_type, act_quote, act_cost, 
+      act_react, act_mem, act_desc
+      )
+    values (#{actId,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{actName,jdbcType=VARCHAR}, 
+      #{actStatus,jdbcType=INTEGER}, #{actStart,jdbcType=TIMESTAMP}, #{actEnd,jdbcType=TIMESTAMP}, 
+      #{actType,jdbcType=INTEGER}, #{actQuote,jdbcType=DOUBLE}, #{actCost,jdbcType=DOUBLE}, 
+      #{actReact,jdbcType=VARCHAR}, #{actMem,jdbcType=VARCHAR}, #{actDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ems1.po.MarketingActivities">
+    insert into marketing_activities
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="actId != null">
+        act_id,
+      </if>
+      <if test="staffId != null">
+        staff_id,
+      </if>
+      <if test="actName != null">
+        act_name,
+      </if>
+      <if test="actStatus != null">
+        act_status,
+      </if>
+      <if test="actStart != null">
+        act_start,
+      </if>
+      <if test="actEnd != null">
+        act_end,
+      </if>
+      <if test="actType != null">
+        act_type,
+      </if>
+      <if test="actQuote != null">
+        act_quote,
+      </if>
+      <if test="actCost != null">
+        act_cost,
+      </if>
+      <if test="actReact != null">
+        act_react,
+      </if>
+      <if test="actMem != null">
+        act_mem,
+      </if>
+      <if test="actDesc != null">
+        act_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="actId != null">
+        #{actId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="actName != null">
+        #{actName,jdbcType=VARCHAR},
+      </if>
+      <if test="actStatus != null">
+        #{actStatus,jdbcType=INTEGER},
+      </if>
+      <if test="actStart != null">
+        #{actStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actEnd != null">
+        #{actEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actType != null">
+        #{actType,jdbcType=INTEGER},
+      </if>
+      <if test="actQuote != null">
+        #{actQuote,jdbcType=DOUBLE},
+      </if>
+      <if test="actCost != null">
+        #{actCost,jdbcType=DOUBLE},
+      </if>
+      <if test="actReact != null">
+        #{actReact,jdbcType=VARCHAR},
+      </if>
+      <if test="actMem != null">
+        #{actMem,jdbcType=VARCHAR},
+      </if>
+      <if test="actDesc != null">
+        #{actDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.MarketingActivities">
+
+    update marketing_activities
+    <set>
+      <if test="staffId != null">
+        staff_id = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="actName != null">
+        act_name = #{actName,jdbcType=VARCHAR},
+      </if>
+      <if test="actStatus != null">
+        act_status = #{actStatus,jdbcType=INTEGER},
+      </if>
+      <if test="actStart != null">
+        act_start = #{actStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actEnd != null">
+        act_end = #{actEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actType != null">
+        act_type = #{actType,jdbcType=INTEGER},
+      </if>
+      <if test="actQuote != null">
+        act_quote = #{actQuote,jdbcType=DOUBLE},
+      </if>
+      <if test="actCost != null">
+        act_cost = #{actCost,jdbcType=DOUBLE},
+      </if>
+      <if test="actReact != null">
+        act_react = #{actReact,jdbcType=VARCHAR},
+      </if>
+      <if test="actMem != null">
+        act_mem = #{actMem,jdbcType=VARCHAR},
+      </if>
+      <if test="actDesc != null">
+        act_desc = #{actDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where act_id = #{actId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ems1.po.MarketingActivities">
+    update marketing_activities
+    set staff_id = #{staffId,jdbcType=INTEGER},
+      act_name = #{actName,jdbcType=VARCHAR},
+      act_status = #{actStatus,jdbcType=INTEGER},
+      act_start = #{actStart,jdbcType=TIMESTAMP},
+      act_end = #{actEnd,jdbcType=TIMESTAMP},
+      act_type = #{actType,jdbcType=INTEGER},
+      act_quote = #{actQuote,jdbcType=DOUBLE},
+      act_cost = #{actCost,jdbcType=DOUBLE},
+      act_react = #{actReact,jdbcType=VARCHAR},
+      act_mem = #{actMem,jdbcType=VARCHAR},
+      act_desc = #{actDesc,jdbcType=VARCHAR}
+    where act_id = #{actId,jdbcType=INTEGER}
+  </update>
+</mapper>

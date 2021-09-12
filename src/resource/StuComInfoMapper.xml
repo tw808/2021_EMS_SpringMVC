@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.student.mapper.StuComInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ems1.po.StuComInfo">
+    <id column="com_id" jdbcType="INTEGER" property="comId" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="staff_id" jdbcType="INTEGER" property="staffId" />
+    <result column="com_time" jdbcType="TIMESTAMP" property="comTime" />
+    <result column="com_content" jdbcType="VARCHAR" property="comContent" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    com_id, stu_id, staff_id, com_time, com_content
+  </sql>
+
+
+  <select id="getStuComList" parameterType="com.ems1.po.StuComInfo" resultMap="BaseResultMap">
+    select a.stu_name, b.*, c.staff_name
+    from student_info a, stu_com_info b, staff_info c
+    where a.stu_id=b.stu_id
+    and c.staff_id=b.staff_id
+    <if test="stuName!=null and stuName!=''">
+      and stu_name=#{stuName}
+    </if>
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.stu_name, b.*, c.staff_name
+    from student_info a, stu_com_info b, staff_info c
+    where a.stu_id=b.stu_id
+    and c.staff_id=b.staff_id
+    and b.com_id = #{comId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from stu_com_info
+    where com_id = #{comId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ems1.po.StuComInfo">
+    insert into stu_com_info (com_id, stu_id, staff_id, 
+      com_time, com_content)
+    values (#{comId,jdbcType=INTEGER}, #{stuId,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, 
+      #{comTime,jdbcType=TIMESTAMP}, #{comContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ems1.po.StuComInfo">
+    insert into stu_com_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="comId != null">
+        com_id,
+      </if>
+      <if test="stuId != null">
+        stu_id,
+      </if>
+      <if test="staffId != null">
+        staff_id,
+      </if>
+      <if test="comTime != null">
+        com_time,
+      </if>
+      <if test="comContent != null">
+        com_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="comId != null">
+        #{comId,jdbcType=INTEGER},
+      </if>
+      <if test="stuId != null">
+        #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="comTime != null">
+        #{comTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comContent != null">
+        #{comContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.StuComInfo">
+    update stu_com_info
+    <set>
+      <if test="stuId != null">
+        stu_id = #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        staff_id = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="comTime != null">
+        com_time = #{comTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comContent != null">
+        com_content = #{comContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where com_id = #{comId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ems1.po.StuComInfo">
+    update stu_com_info
+    set stu_id = #{stuId,jdbcType=INTEGER},
+      staff_id = #{staffId,jdbcType=INTEGER},
+      com_time = #{comTime,jdbcType=TIMESTAMP},
+      com_content = #{comContent,jdbcType=VARCHAR}
+    where com_id = #{comId,jdbcType=INTEGER}
+  </update>
+</mapper>

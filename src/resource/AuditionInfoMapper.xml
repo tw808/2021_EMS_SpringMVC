@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.recruitment.mapper.AuditionInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ems1.po.AuditionInfo">
+    <id column="aud_id" jdbcType="INTEGER" property="audId" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="aud_time" jdbcType="TIMESTAMP" property="audTime" />
+    <result column="aud_addr" jdbcType="VARCHAR" property="audAddr" />
+    <result column="aud_course" jdbcType="VARCHAR" property="audCourse" />
+    <result column="aud_desc" jdbcType="VARCHAR" property="audDesc" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    aud_id, stu_id, aud_time, aud_addr, aud_course, aud_desc
+  </sql>
+
+
+  <select id="getAuditionList" parameterType="com.ems1.po.AuditionInfo" resultMap="BaseResultMap">
+    select a.stu_name, b.*
+    from student_info a, audition_info b
+    where a.stu_id=b.stu_id
+    <if test="stuName!=null and stuName!=''">
+      and a.stu_name=#{stuName}
+    </if>
+    <if test="audCourse!=null and audCourse!=''">
+      and b.aud_course=#{audCourse}
+    </if>
+    <if test="stuId!=null">
+      and b.stu_id=#{stuId}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.stu_name, b.*
+    from student_info a, audition_info b
+    where a.stu_id=b.stu_id
+    and aud_id = #{audId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from audition_info
+    where aud_id = #{audId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ems1.po.AuditionInfo">
+    insert into audition_info (aud_id, stu_id, aud_time, 
+      aud_addr, aud_course, aud_desc
+      )
+    values (#{audId,jdbcType=INTEGER}, #{stuId,jdbcType=INTEGER}, #{audTime,jdbcType=TIMESTAMP}, 
+      #{audAddr,jdbcType=VARCHAR}, #{audCourse,jdbcType=VARCHAR}, #{audDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ems1.po.AuditionInfo">
+    insert into audition_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="audId != null">
+        aud_id,
+      </if>
+      <if test="stuId != null">
+        stu_id,
+      </if>
+      <if test="audTime != null">
+        aud_time,
+      </if>
+      <if test="audAddr != null">
+        aud_addr,
+      </if>
+      <if test="audCourse != null">
+        aud_course,
+      </if>
+      <if test="audDesc != null">
+        aud_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="audId != null">
+        #{audId,jdbcType=INTEGER},
+      </if>
+      <if test="stuId != null">
+        #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="audTime != null">
+        #{audTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audAddr != null">
+        #{audAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="audCourse != null">
+        #{audCourse,jdbcType=VARCHAR},
+      </if>
+      <if test="audDesc != null">
+        #{audDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.AuditionInfo">
+    update audition_info
+    <set>
+      <if test="stuId != null">
+        stu_id = #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="audTime != null">
+        aud_time = #{audTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audAddr != null">
+        aud_addr = #{audAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="audCourse != null">
+        aud_course = #{audCourse,jdbcType=VARCHAR},
+      </if>
+      <if test="audDesc != null">
+        aud_desc = #{audDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aud_id = #{audId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ems1.po.AuditionInfo">
+    update audition_info
+    set stu_id = #{stuId,jdbcType=INTEGER},
+      aud_time = #{audTime,jdbcType=TIMESTAMP},
+      aud_addr = #{audAddr,jdbcType=VARCHAR},
+      aud_course = #{audCourse,jdbcType=VARCHAR},
+      aud_desc = #{audDesc,jdbcType=VARCHAR}
+    where aud_id = #{audId,jdbcType=INTEGER}
+  </update>
+</mapper>

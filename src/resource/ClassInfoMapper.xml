@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.classinfo.mapper.ClassInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ems1.po.ClassInfo">
+    <id column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="disc_id" jdbcType="INTEGER" property="discId" />
+    <result column="syll_id" jdbcType="INTEGER" property="syllId" />
+    <result column="classroom_id" jdbcType="INTEGER" property="classroomId" />
+    <result column="staff_id" jdbcType="INTEGER" property="staffId" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <result column="class_num" jdbcType="INTEGER" property="classNum" />
+    <result column="class_start" jdbcType="TIMESTAMP" property="classStart" />
+    <result column="class_end" jdbcType="TIMESTAMP" property="classEnd" />
+    <result column="class_effective" jdbcType="VARCHAR" property="classEffective" />
+    <result column="class_status" jdbcType="VARCHAR" property="classStatus" />
+    <result column="class_desc" jdbcType="VARCHAR" property="classDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    class_id, disc_id, syll_id, classroom_id, staff_id, class_name, class_num, class_start, 
+    class_end, class_effective, class_status, class_desc
+  </sql>
+  <select id="getClassroomList" parameterType="com.ems1.po.ClassInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from class_info
+    where class_status='1'
+    <if test="className!=null and className!=''">
+      and class_name=#{className}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from class_info
+    where class_id = #{classId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from class_info
+    where class_id = #{classId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ems1.po.ClassInfo">
+    insert into class_info (class_id, disc_id, syll_id, 
+      classroom_id, staff_id, class_name, 
+      class_num, class_start, class_end, 
+      class_effective, class_status, class_desc
+      )
+    values (#{classId,jdbcType=INTEGER}, #{discId,jdbcType=INTEGER}, #{syllId,jdbcType=INTEGER}, 
+      #{classroomId,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, 
+      #{classNum,jdbcType=INTEGER}, #{classStart,jdbcType=TIMESTAMP}, #{classEnd,jdbcType=TIMESTAMP}, 
+      #{classEffective,jdbcType=VARCHAR}, #{classStatus,jdbcType=VARCHAR}, #{classDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ems1.po.ClassInfo">
+    insert into class_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="discId != null">
+        disc_id,
+      </if>
+      <if test="syllId != null">
+        syll_id,
+      </if>
+      <if test="classroomId != null">
+        classroom_id,
+      </if>
+      <if test="staffId != null">
+        staff_id,
+      </if>
+      <if test="className != null">
+        class_name,
+      </if>
+      <if test="classNum != null">
+        class_num,
+      </if>
+      <if test="classStart != null">
+        class_start,
+      </if>
+      <if test="classEnd != null">
+        class_end,
+      </if>
+      <if test="classEffective != null">
+        class_effective,
+      </if>
+      <if test="classStatus != null">
+        class_status,
+      </if>
+      <if test="classDesc != null">
+        class_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="discId != null">
+        #{discId,jdbcType=INTEGER},
+      </if>
+      <if test="syllId != null">
+        #{syllId,jdbcType=INTEGER},
+      </if>
+      <if test="classroomId != null">
+        #{classroomId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="className != null">
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="classNum != null">
+        #{classNum,jdbcType=INTEGER},
+      </if>
+      <if test="classStart != null">
+        #{classStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classEnd != null">
+        #{classEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classEffective != null">
+        #{classEffective,jdbcType=VARCHAR},
+      </if>
+      <if test="classStatus != null">
+        #{classStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="classDesc != null">
+        #{classDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.ClassInfo">
+    update class_info
+    <set>
+      <if test="discId != null">
+        disc_id = #{discId,jdbcType=INTEGER},
+      </if>
+      <if test="syllId != null">
+        syll_id = #{syllId,jdbcType=INTEGER},
+      </if>
+      <if test="classroomId != null">
+        classroom_id = #{classroomId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        staff_id = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="className != null">
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="classNum != null">
+        class_num = #{classNum,jdbcType=INTEGER},
+      </if>
+      <if test="classStart != null">
+        class_start = #{classStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classEnd != null">
+        class_end = #{classEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classEffective != null">
+        class_effective = #{classEffective,jdbcType=VARCHAR},
+      </if>
+      <if test="classStatus != null">
+        class_status = #{classStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="classDesc != null">
+        class_desc = #{classDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where class_id = #{classId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ems1.po.ClassInfo">
+    update class_info
+    set disc_id = #{discId,jdbcType=INTEGER},
+      syll_id = #{syllId,jdbcType=INTEGER},
+      classroom_id = #{classroomId,jdbcType=INTEGER},
+      staff_id = #{staffId,jdbcType=INTEGER},
+      class_name = #{className,jdbcType=VARCHAR},
+      class_num = #{classNum,jdbcType=INTEGER},
+      class_start = #{classStart,jdbcType=TIMESTAMP},
+      class_end = #{classEnd,jdbcType=TIMESTAMP},
+      class_effective = #{classEffective,jdbcType=VARCHAR},
+      class_status = #{classStatus,jdbcType=VARCHAR},
+      class_desc = #{classDesc,jdbcType=VARCHAR}
+    where class_id = #{classId,jdbcType=INTEGER}
+  </update>
+</mapper>

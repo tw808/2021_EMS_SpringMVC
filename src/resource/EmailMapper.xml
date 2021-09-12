@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.marketing.mapper.EmailMapper">
+    <resultMap id="BaseResultMap" type="com.ems1.po.Email">
+        <id column="em_id" jdbcType="INTEGER" property="emId"/>
+        <result column="staff_id" jdbcType="INTEGER" property="staffId"/>
+        <result column="em_title" jdbcType="VARCHAR" property="emTitle"/>
+        <result column="em_msg" jdbcType="VARCHAR" property="emMsg"/>
+        <result column="em_send_time" jdbcType="TIMESTAMP" property="emSendTime"/>
+        <result column="em_receiver" jdbcType="VARCHAR" property="emReceiver"/>
+        <result column="em_receiver_em" jdbcType="VARCHAR" property="emReceiverEm"/>
+        <result column="em_status" jdbcType="VARCHAR" property="emStatus"/>
+        <result column="staff_name" jdbcType="VARCHAR" property="staffName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    em_id, staff_id, em_title, em_msg, em_send_time, em_receiver, em_receiver_em, em_status
+  </sql>
+    <select id="getEmList" parameterType="com.ems1.po.Email" resultMap="BaseResultMap">
+        select a.*,b.staff_name
+        from email a, staff_info b
+        where a.staff_id = b.staff_id
+        <if test="emReceiverEm!=null and emReceiverEm!=''">
+            and a.em_receiver_em=#{emReceiverEm}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select a.*,b.staff_name
+        from email a, staff_info b
+        where a.staff_id = b.staff_id
+        and a.em_id = #{imId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from email
+    where em_id = #{emId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ems1.po.Email">
+    insert into email (em_id, staff_id, em_title, 
+      em_msg, em_send_time, em_receiver, 
+      em_receiver_em, em_status)
+    values (#{emId,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{emTitle,jdbcType=VARCHAR}, 
+      #{emMsg,jdbcType=VARCHAR}, #{emSendTime,jdbcType=TIMESTAMP}, #{emReceiver,jdbcType=VARCHAR}, 
+      #{emReceiverEm,jdbcType=VARCHAR}, #{emStatus,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ems1.po.Email">
+        insert into email
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="emId != null">
+                em_id,
+            </if>
+            <if test="staffId != null">
+                staff_id,
+            </if>
+            <if test="emTitle != null">
+                em_title,
+            </if>
+            <if test="emMsg != null">
+                em_msg,
+            </if>
+            <if test="emSendTime != null">
+                em_send_time,
+            </if>
+            <if test="emReceiver != null">
+                em_receiver,
+            </if>
+            <if test="emReceiverEm != null">
+                em_receiver_em,
+            </if>
+            <if test="emStatus != null">
+                em_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="emId != null">
+                #{emId,jdbcType=INTEGER},
+            </if>
+            <if test="staffId != null">
+                #{staffId,jdbcType=INTEGER},
+            </if>
+            <if test="emTitle != null">
+                #{emTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="emMsg != null">
+                #{emMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="emSendTime != null">
+                #{emSendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="emReceiver != null">
+                #{emReceiver,jdbcType=VARCHAR},
+            </if>
+            <if test="emReceiverEm != null">
+                #{emReceiverEm,jdbcType=VARCHAR},
+            </if>
+            <if test="emStatus != null">
+                #{emStatus,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.Email">
+        update email
+        <set>
+            <if test="staffId != null">
+                staff_id = #{staffId,jdbcType=INTEGER},
+            </if>
+            <if test="emTitle != null">
+                em_title = #{emTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="emMsg != null">
+                em_msg = #{emMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="emSendTime != null">
+                em_send_time = #{emSendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="emReceiver != null">
+                em_receiver = #{emReceiver,jdbcType=VARCHAR},
+            </if>
+            <if test="emReceiverEm != null">
+                em_receiver_em = #{emReceiverEm,jdbcType=VARCHAR},
+            </if>
+            <if test="emStatus != null">
+                em_status = #{emStatus,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where em_id = #{emId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ems1.po.Email">
+    update email
+    set staff_id = #{staffId,jdbcType=INTEGER},
+      em_title = #{emTitle,jdbcType=VARCHAR},
+      em_msg = #{emMsg,jdbcType=VARCHAR},
+      em_send_time = #{emSendTime,jdbcType=TIMESTAMP},
+      em_receiver = #{emReceiver,jdbcType=VARCHAR},
+      em_receiver_em = #{emReceiverEm,jdbcType=VARCHAR},
+      em_status = #{emStatus,jdbcType=VARCHAR}
+    where em_id = #{emId,jdbcType=INTEGER}
+  </update>
+</mapper>

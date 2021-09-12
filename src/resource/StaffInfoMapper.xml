@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ems1.system.mapper.StaffInfoMapper">
+    <resultMap id="BaseResultMap" type="com.ems1.po.StaffInfo">
+        <id column="staff_id" property="staffId" jdbcType="INTEGER"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="staff_name" property="staffName" jdbcType="VARCHAR"/>
+        <result column="staff_sex" property="staffSex" jdbcType="VARCHAR"/>
+        <result column="staff_age" property="staffAge" jdbcType="INTEGER"/>
+        <result column="staff_country" property="staffCountry" jdbcType="VARCHAR"/>
+        <result column="staff_id_num" property="staffIdNum" jdbcType="VARCHAR"/>
+        <result column="staff_bday" property="staffBday" jdbcType="TIMESTAMP"/>
+        <result column="staff_phone" property="staffPhone" jdbcType="VARCHAR"/>
+        <result column="staff_cell" property="staffCell" jdbcType="VARCHAR"/>
+        <result column="staff_email" property="staffEmail" jdbcType="VARCHAR"/>
+        <result column="staff_address" property="staffAddress" jdbcType="VARCHAR"/>
+        <result column="staff_im" property="staffIm" jdbcType="VARCHAR"/>
+        <result column="staff_start" property="staffStart" jdbcType="TIMESTAMP"/>
+        <result column="staff_edu" property="staffEdu" jdbcType="VARCHAR"/>
+        <result column="staff_about" property="staffAbout" jdbcType="VARCHAR"/>
+        <result column="staff_status" property="staffStatus" jdbcType="VARCHAR"/>
+        <result column="user_num" property="userNum" jdbcType="VARCHAR"/>
+        <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    staff_id, role_id, staff_name, staff_sex, staff_age, staff_country, staff_id_num, 
+    staff_bday, staff_phone, staff_cell, staff_email, staff_address, staff_im, staff_start, 
+    staff_edu, staff_about, staff_status, user_num, user_pwd
+  </sql>
+
+    <select id="getTeacherInfoList" resultMap="BaseResultMap" parameterType="com.ems1.po.StaffInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from staff_info where staff_status ='2'
+        <if test="staffId !=null and staffId!=''">
+            and staff_id=#{staffId, jdbcType=INTEGER}
+        </if>
+        <if test="staffName !=null and staffName!=''">
+            and staff_name=#{staffName}
+        </if>
+        <if test="staffCell !=null and staffCell!=''">
+            and staff_cell=#{staffCell}
+        </if>
+        <if test="userNum !=null and userNum!=''">
+            and user_num=#{userNum}
+        </if>
+        <if test="userPwd !=null and userPwd!=''">
+            and user_pwd=#{userPwd}
+        </if>
+        order by staff_id desc
+    </select>
+    <select id="getStaffList" resultMap="BaseResultMap" parameterType="com.ems1.po.StaffInfo">
+        select a.*, b.role_name
+        from staff_info a join role_info b on a.role_id=b.role_id
+        and a.staff_status !='0'
+        <if test="staffId !=null and staffId!=''">
+            and a.staff_id=#{staffId, jdbcType=INTEGER}
+        </if>
+        <if test="staffName !=null and staffName!=''">
+            and a.staff_name=#{staffName}
+        </if>
+        order by a.staff_id desc
+    </select>
+    <select id="getStaffInfoList" resultMap="BaseResultMap" parameterType="com.ems1.po.StaffInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from staff_info where staff_status !='0'
+        <if test="staffId !=null and staffId!=''">
+            and staff_id=#{staffId, jdbcType=INTEGER}
+        </if>
+        <if test="staffName !=null and staffName!=''">
+            and staff_name=#{staffName}
+        </if>
+        <if test="staffCell !=null and staffCell!=''">
+            and staff_cell=#{staffCell}
+        </if>
+        <if test="userNum !=null and userNum!=''">
+            and user_num=#{userNum}
+        </if>
+        <if test="userPwd !=null and userPwd!=''">
+            and user_pwd=#{userPwd}
+        </if>
+        <if test="staffStatus !=null and staffStatus!=''">
+            and staff_status=#{staffStatus}
+        </if>
+        order by staff_id desc
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from staff_info
+        where staff_id = #{staffId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from staff_info
+    where staff_id = #{staffId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ems1.po.StaffInfo">
+    insert into staff_info (staff_id, role_id, staff_name, 
+      staff_sex, staff_age, staff_country, 
+      staff_id_num, staff_bday, staff_phone, 
+      staff_cell, staff_email, staff_address, 
+      staff_im, staff_start, staff_edu, 
+      staff_about, staff_status, user_num, 
+      user_pwd)
+    values (#{staffId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{staffName,jdbcType=VARCHAR}, 
+      #{staffSex,jdbcType=VARCHAR}, #{staffAge,jdbcType=INTEGER}, #{staffCountry,jdbcType=VARCHAR}, 
+      #{staffIdNum,jdbcType=VARCHAR}, #{staffBday,jdbcType=TIMESTAMP}, #{staffPhone,jdbcType=VARCHAR}, 
+      #{staffCell,jdbcType=VARCHAR}, #{staffEmail,jdbcType=VARCHAR}, #{staffAddress,jdbcType=VARCHAR}, 
+      #{staffIm,jdbcType=VARCHAR}, #{staffStart,jdbcType=TIMESTAMP}, #{staffEdu,jdbcType=VARCHAR}, 
+      #{staffAbout,jdbcType=VARCHAR}, #{staffStatus,jdbcType=VARCHAR}, #{userNum,jdbcType=VARCHAR}, 
+      #{userPwd,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ems1.po.StaffInfo">
+        insert into staff_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="staffId != null">
+                staff_id,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="staffName != null">
+                staff_name,
+            </if>
+            <if test="staffSex != null">
+                staff_sex,
+            </if>
+            <if test="staffAge != null">
+                staff_age,
+            </if>
+            <if test="staffCountry != null">
+                staff_country,
+            </if>
+            <if test="staffIdNum != null">
+                staff_id_num,
+            </if>
+            <if test="staffBday != null">
+                staff_bday,
+            </if>
+            <if test="staffPhone != null">
+                staff_phone,
+            </if>
+            <if test="staffCell != null">
+                staff_cell,
+            </if>
+            <if test="staffEmail != null">
+                staff_email,
+            </if>
+            <if test="staffAddress != null">
+                staff_address,
+            </if>
+            <if test="staffIm != null">
+                staff_im,
+            </if>
+            <if test="staffStart != null">
+                staff_start,
+            </if>
+            <if test="staffEdu != null">
+                staff_edu,
+            </if>
+            <if test="staffAbout != null">
+                staff_about,
+            </if>
+            <if test="staffStatus != null">
+                staff_status,
+            </if>
+            <if test="userNum != null">
+                user_num,
+            </if>
+            <if test="userPwd != null">
+                user_pwd,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="staffId != null">
+                #{staffId,jdbcType=INTEGER},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="staffName != null">
+                #{staffName,jdbcType=VARCHAR},
+            </if>
+            <if test="staffSex != null">
+                #{staffSex,jdbcType=VARCHAR},
+            </if>
+            <if test="staffAge != null">
+                #{staffAge,jdbcType=INTEGER},
+            </if>
+            <if test="staffCountry != null">
+                #{staffCountry,jdbcType=VARCHAR},
+            </if>
+            <if test="staffIdNum != null">
+                #{staffIdNum,jdbcType=VARCHAR},
+            </if>
+            <if test="staffBday != null">
+                #{staffBday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="staffPhone != null">
+                #{staffPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="staffCell != null">
+                #{staffCell,jdbcType=VARCHAR},
+            </if>
+            <if test="staffEmail != null">
+                #{staffEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="staffAddress != null">
+                #{staffAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="staffIm != null">
+                #{staffIm,jdbcType=VARCHAR},
+            </if>
+            <if test="staffStart != null">
+                #{staffStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="staffEdu != null">
+                #{staffEdu,jdbcType=VARCHAR},
+            </if>
+            <if test="staffAbout != null">
+                #{staffAbout,jdbcType=VARCHAR},
+            </if>
+            <if test="staffStatus != null">
+                #{staffStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="userNum != null">
+                #{userNum,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null">
+                #{userPwd,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.StaffInfo">
+        update staff_info
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="staffName != null">
+                staff_name = #{staffName,jdbcType=VARCHAR},
+            </if>
+            <if test="staffSex != null">
+                staff_sex = #{staffSex,jdbcType=VARCHAR},
+            </if>
+            <if test="staffAge != null">
+                staff_age = #{staffAge,jdbcType=INTEGER},
+            </if>
+            <if test="staffCountry != null">
+                staff_country = #{staffCountry,jdbcType=VARCHAR},
+            </if>
+            <if test="staffIdNum != null">
+                staff_id_num = #{staffIdNum,jdbcType=VARCHAR},
+            </if>
+            <if test="staffBday != null">
+                staff_bday = #{staffBday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="staffPhone != null">
+                staff_phone = #{staffPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="staffCell != null">
+                staff_cell = #{staffCell,jdbcType=VARCHAR},
+            </if>
+            <if test="staffEmail != null">
+                staff_email = #{staffEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="staffAddress != null">
+                staff_address = #{staffAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="staffIm != null">
+                staff_im = #{staffIm,jdbcType=VARCHAR},
+            </if>
+            <if test="staffStart != null">
+                staff_start = #{staffStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="staffEdu != null">
+                staff_edu = #{staffEdu,jdbcType=VARCHAR},
+            </if>
+            <if test="staffAbout != null">
+                staff_about = #{staffAbout,jdbcType=VARCHAR},
+            </if>
+            <if test="staffStatus != null">
+                staff_status = #{staffStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="userNum != null">
+                user_num = #{userNum,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null">
+                user_pwd = #{userPwd,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where staff_id = #{staffId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ems1.po.StaffInfo">
+    update staff_info
+    set role_id = #{roleId,jdbcType=INTEGER},
+      staff_name = #{staffName,jdbcType=VARCHAR},
+      staff_sex = #{staffSex,jdbcType=VARCHAR},
+      staff_age = #{staffAge,jdbcType=INTEGER},
+      staff_country = #{staffCountry,jdbcType=VARCHAR},
+      staff_id_num = #{staffIdNum,jdbcType=VARCHAR},
+      staff_bday = #{staffBday,jdbcType=TIMESTAMP},
+      staff_phone = #{staffPhone,jdbcType=VARCHAR},
+      staff_cell = #{staffCell,jdbcType=VARCHAR},
+      staff_email = #{staffEmail,jdbcType=VARCHAR},
+      staff_address = #{staffAddress,jdbcType=VARCHAR},
+      staff_im = #{staffIm,jdbcType=VARCHAR},
+      staff_start = #{staffStart,jdbcType=TIMESTAMP},
+      staff_edu = #{staffEdu,jdbcType=VARCHAR},
+      staff_about = #{staffAbout,jdbcType=VARCHAR},
+      staff_status = #{staffStatus,jdbcType=VARCHAR},
+      user_num = #{userNum,jdbcType=VARCHAR},
+      user_pwd = #{userPwd,jdbcType=VARCHAR}
+    where staff_id = #{staffId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.classinfo.mapper.ClassroomInformMapper">
+  <resultMap id="BaseResultMap" type="com.ems1.po.ClassroomInform">
+    <id column="classroom_id" jdbcType="INTEGER" property="classroomId" />
+    <result column="classroom_name" jdbcType="VARCHAR" property="classroomName" />
+    <result column="classroom_max" jdbcType="INTEGER" property="classroomMax" />
+    <result column="classroom_info" jdbcType="VARCHAR" property="classroomInfo" />
+    <result column="classroom_remark" jdbcType="VARCHAR" property="classroomRemark" />
+    <result column="classroom_mark" jdbcType="VARCHAR" property="classroomMark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    classroom_id, classroom_name, classroom_max, classroom_info, classroom_remark
+  </sql>
+
+  <select id="getClassroomList" parameterType="com.ems1.po.ClassroomInform" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from classroom_inform
+    <if test="classroomName!=null and classroomName!=''">
+      where classroom_name=#{classroomName}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classroom_inform
+    where classroom_id = #{classroomId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from classroom_inform
+    where classroom_id = #{classroomId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ems1.po.ClassroomInform">
+    insert into classroom_inform (classroom_id, classroom_name, classroom_max, 
+      classroom_info, classroom_remark)
+    values (#{classroomId,jdbcType=INTEGER}, #{classroomName,jdbcType=VARCHAR}, #{classroomMax,jdbcType=INTEGER}, 
+      #{classroomInfo,jdbcType=VARCHAR}, #{classroomRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ems1.po.ClassroomInform">
+    insert into classroom_inform
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classroomId != null">
+        classroom_id,
+      </if>
+      <if test="classroomName != null">
+        classroom_name,
+      </if>
+      <if test="classroomMax != null">
+        classroom_max,
+      </if>
+      <if test="classroomInfo != null">
+        classroom_info,
+      </if>
+      <if test="classroomRemark != null">
+        classroom_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classroomId != null">
+        #{classroomId,jdbcType=INTEGER},
+      </if>
+      <if test="classroomName != null">
+        #{classroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomMax != null">
+        #{classroomMax,jdbcType=INTEGER},
+      </if>
+      <if test="classroomInfo != null">
+        #{classroomInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomRemark != null">
+        #{classroomRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.ClassroomInform">
+    update classroom_inform
+    <set>
+      <if test="classroomName != null">
+        classroom_name = #{classroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomMax != null">
+        classroom_max = #{classroomMax,jdbcType=INTEGER},
+      </if>
+      <if test="classroomInfo != null">
+        classroom_info = #{classroomInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomRemark != null">
+        classroom_remark = #{classroomRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where classroom_id = #{classroomId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ems1.po.ClassroomInform">
+    update classroom_inform
+    set classroom_name = #{classroomName,jdbcType=VARCHAR},
+      classroom_max = #{classroomMax,jdbcType=INTEGER},
+      classroom_info = #{classroomInfo,jdbcType=VARCHAR},
+      classroom_remark = #{classroomRemark,jdbcType=VARCHAR}
+    where classroom_id = #{classroomId,jdbcType=INTEGER}
+  </update>
+</mapper>

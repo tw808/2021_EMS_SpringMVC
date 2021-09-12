@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.classinfo.mapper.DisciplineMapper">
+  <resultMap id="BaseResultMap" type="com.ems1.po.Discipline">
+    <id column="disc_id" jdbcType="INTEGER" property="discId" />
+    <result column="disc_name" jdbcType="VARCHAR" property="discName" />
+    <result column="disc_tuition" jdbcType="INTEGER" property="discTuition" />
+    <result column="disc_time" jdbcType="INTEGER" property="discTime" />
+    <result column="disc_desc" jdbcType="VARCHAR" property="discDesc" />
+    <result column="disc_effective" jdbcType="VARCHAR" property="discEffective" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    disc_id, disc_name, disc_tuition, disc_time, disc_desc, disc_effective
+  </sql>
+
+  <select id="getDisciplineList" parameterType="com.ems1.po.Discipline" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from discipline
+    <if test="discName!=null and discName!=''">
+        where disc_name=#{discName}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List" />
+  from discipline
+  where disc_id = #{discId,jdbcType=INTEGER}
+</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from discipline
+    where disc_id = #{discId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ems1.po.Discipline">
+    insert into discipline (disc_id, disc_name, disc_tuition, 
+      disc_time, disc_desc, disc_effective
+      )
+    values (#{discId,jdbcType=INTEGER}, #{discName,jdbcType=VARCHAR}, #{discTuition,jdbcType=INTEGER}, 
+      #{discTime,jdbcType=INTEGER}, #{discDesc,jdbcType=VARCHAR}, #{discEffective,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ems1.po.Discipline">
+    insert into discipline
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="discId != null">
+        disc_id,
+      </if>
+      <if test="discName != null">
+        disc_name,
+      </if>
+      <if test="discTuition != null">
+        disc_tuition,
+      </if>
+      <if test="discTime != null">
+        disc_time,
+      </if>
+      <if test="discDesc != null">
+        disc_desc,
+      </if>
+      <if test="discEffective != null">
+        disc_effective,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="discId != null">
+        #{discId,jdbcType=INTEGER},
+      </if>
+      <if test="discName != null">
+        #{discName,jdbcType=VARCHAR},
+      </if>
+      <if test="discTuition != null">
+        #{discTuition,jdbcType=INTEGER},
+      </if>
+      <if test="discTime != null">
+        #{discTime,jdbcType=INTEGER},
+      </if>
+      <if test="discDesc != null">
+        #{discDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="discEffective != null">
+        #{discEffective,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.Discipline">
+    update discipline
+    <set>
+      <if test="discName != null">
+        disc_name = #{discName,jdbcType=VARCHAR},
+      </if>
+      <if test="discTuition != null">
+        disc_tuition = #{discTuition,jdbcType=INTEGER},
+      </if>
+      <if test="discTime != null">
+        disc_time = #{discTime,jdbcType=INTEGER},
+      </if>
+      <if test="discDesc != null">
+        disc_desc = #{discDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="discEffective != null">
+        disc_effective = #{discEffective,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where disc_id = #{discId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ems1.po.Discipline">
+    update discipline
+    set disc_name = #{discName,jdbcType=VARCHAR},
+      disc_tuition = #{discTuition,jdbcType=INTEGER},
+      disc_time = #{discTime,jdbcType=INTEGER},
+      disc_desc = #{discDesc,jdbcType=VARCHAR},
+      disc_effective = #{discEffective,jdbcType=VARCHAR}
+    where disc_id = #{discId,jdbcType=INTEGER}
+  </update>
+</mapper>

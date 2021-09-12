@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--    mysql-->
+<!--    <typeAliases>-->
+<!--        <typeAlias type="com.ems.po.StaffInfo" alias="staffInfo"/>-->
+<!--    </typeAliases>-->
+    <mappers>
+        <mapper resource="StaffInfoMapper.xml"/>
+        <mapper resource="RoleInfoMapper.xml"/>
+        <mapper resource="AccessInfoMapper.xml"/>
+        <mapper resource="RoleAccessInfoMapper.xml"/>
+        <mapper resource="DataDictionaryMapper.xml"/>
+        <mapper resource="TemplateMapper.xml"/>
+        <mapper resource="ImInfoMapper.xml"/>
+        <mapper resource="EmailMapper.xml"/>
+        <mapper resource="MarketingActivitiesMapper.xml"/>
+        <mapper resource="StudentInfoMapper.xml"/>
+        <mapper resource="TrackRecInfoMapper.xml"/>
+        <mapper resource="AuditionInfoMapper.xml"/>
+        <mapper resource="DisciplineMapper.xml"/>
+        <mapper resource="ClassroomInformMapper.xml"/>
+        <mapper resource="SyllabusInfoMapper.xml"/>
+        <mapper resource="ReportMapper.xml"/>
+        <mapper resource="ClassInfoMapper.xml"/>
+        <mapper resource="EvaluationInfoMapper.xml"/>
+        <mapper resource="StuComInfoMapper.xml"/>
+        <mapper resource="StuGradeMapper.xml"/>
+        <mapper resource="StaffSalaryMapper.xml"/>
+        <mapper resource="StudentFinMapper.xml"/>
+    </mappers>
+</configuration>

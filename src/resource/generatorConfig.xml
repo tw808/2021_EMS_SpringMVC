@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- driver-->
+    <classPathEntry location="D:\IJ\ems2\ems2\webapp\WEB-INF\lib\mysql-connector-java-8.0.23.jar"/>
+    <context id="context1">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/ems"
+                        userId="root" password="12345"></jdbcConnection>
+        <!-- bean generator-->
+        <javaModelGenerator targetPackage="com.ems1.po" targetProject="src/main/java"></javaModelGenerator>
+        <!--mapper xml    -->
+        <sqlMapGenerator targetPackage="com.ems1.system.mapper" targetProject="src/main/java"></sqlMapGenerator>
+        <!--mapper interface       -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ems1.system.mapper" targetProject="src/main/java">
+        </javaClientGenerator>
+        <!--        staff info-->
+        <!--        <table schema="" tableName="staff_info"-->
+        <!--        role info-->
+        <!--        <table schema="" tableName="role_info"-->
+        <!--        access info-->
+        <!--        <table schema="" tableName="access_info"-->
+        <!--        role_access_info-->
+        <!--        <table schema="" tableName="role_access_info"-->
+        <!--        data dictionary-->
+        <!--        <table schema="" tableName="data_dictionary"-->
+        <!--        template-->
+        <!--        <table schema="" tableName="template"-->
+        <!--        im_info-->
+        <!--        <table schema="" tableName="im_info"-->
+        <!--        email-->
+        <!--        <table schema="" tableName="email"-->
+        <!--        marketing activities-->
+        <!--        <table schema="" tableName="marketing_activities"-->
+        <!--        student info-->
+        <!--        <table schema="" tableName="student_info"-->
+        <!--        track rec-->
+        <!--        <table schema="" tableName="track_rec_info"-->
+        <!--        audition info-->
+        <!--        <table schema="" tableName="audition_info"-->
+        <!--        class_info-->
+        <!--        <table schema="" tableName="class_info"-->
+        <!--        classroom_inform-->
+        <!--        <table schema="" tableName="classroom_inform"-->
+        <!--        discipline-->
+        <!--        <table schema="" tableName="discipline"-->
+        <!--        syllabus_info-->
+        <!--        <table schema="" tableName="syllabus_info"-->
+        <!--        stu_grade-->
+        <!--        <table schema="" tableName="stu_grade"-->
+        <!--        student communication info-->
+        <!--        <table schema="" tableName="stu_com_info"-->
+        <!--        evaluation-->
+        <!--        <table schema="" tableName="evaluation_info"-->
+        <!--        attendance info-->
+        <!--        <table schema="" tableName="attendance_info"-->
+        <!--        class transfer-->
+        <!--        <table schema="" tableName="class_trans_info"-->
+        <!--        staff salary-->
+        <!--        <table schema="" tableName="staff_salary"-->
+        <!--        student finance-->
+        <!--        <table schema="" tableName="student_fin"-->
+        <table schema="" tableName="student_fin"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+    </context>
+</generatorConfiguration>

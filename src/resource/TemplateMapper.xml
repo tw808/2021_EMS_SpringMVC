@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.marketing.mapper.TemplateMapper">
+    <resultMap id="BaseResultMap" type="com.ems1.po.Template">
+        <id column="template_id" jdbcType="INTEGER" property="templateId"/>
+        <result column="template_title" jdbcType="VARCHAR" property="templateTitle"/>
+        <result column="template_content" jdbcType="VARCHAR" property="templateContent"/>
+        <result column="template_ENGINE" jdbcType="VARCHAR" property="templateEngine"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    template_id, template_title, template_content, template_ENGINE
+  </sql>
+    <select id="getTemplateList" parameterType="com.ems1.po.Template" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from template
+        <where>
+            <if test="templateTitle!=null and templateTitle!=''">
+                and template_title=#{templateTitle}
+            </if>
+            <if test="templateEngine!=null and templateEngine!=''">
+                and template_ENGINE=#{templateEngine}
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from template
+        where template_id = #{templateId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from template
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ems1.po.Template">
+    insert into template (template_id, template_title, template_content, 
+      template_ENGINE)
+    values (#{templateId,jdbcType=INTEGER}, #{templateTitle,jdbcType=VARCHAR}, #{templateContent,jdbcType=VARCHAR}, 
+      #{templateEngine,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ems1.po.Template">
+        insert into template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">
+                template_id,
+            </if>
+            <if test="templateTitle != null">
+                template_title,
+            </if>
+            <if test="templateContent != null">
+                template_content,
+            </if>
+            <if test="templateEngine != null">
+                template_ENGINE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">
+                #{templateId,jdbcType=INTEGER},
+            </if>
+            <if test="templateTitle != null">
+                #{templateTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="templateContent != null">
+                #{templateContent,jdbcType=VARCHAR},
+            </if>
+            <if test="templateEngine != null">
+                #{templateEngine,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.Template">
+        update template
+        <set>
+            <if test="templateTitle != null">
+                template_title = #{templateTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="templateContent != null">
+                template_content = #{templateContent,jdbcType=VARCHAR},
+            </if>
+            <if test="templateEngine != null">
+                template_ENGINE = #{templateEngine,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where template_id = #{templateId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ems1.po.Template">
+    update template
+    set template_title = #{templateTitle,jdbcType=VARCHAR},
+      template_content = #{templateContent,jdbcType=VARCHAR},
+      template_ENGINE = #{templateEngine,jdbcType=VARCHAR}
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </update>
+</mapper>

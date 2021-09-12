@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.marketing.mapper.ImInfoMapper">
+    <resultMap id="BaseResultMap" type="com.ems1.po.ImInfo">
+        <id column="im_id" jdbcType="INTEGER" property="imId"/>
+        <result column="staff_id" jdbcType="INTEGER" property="staffId"/>
+        <result column="im_sender" jdbcType="VARCHAR" property="imSender"/>
+        <result column="im_content" jdbcType="VARCHAR" property="imContent"/>
+        <result column="im_receiver" jdbcType="VARCHAR" property="imReceiver"/>
+        <result column="im_receiver_cell" jdbcType="INTEGER" property="imReceiverCell"/>
+        <result column="im_send_time" jdbcType="TIMESTAMP" property="imSendTime"/>
+        <result column="im_send_status" jdbcType="VARCHAR" property="imSendStatus"/>
+        <result column="staff_name" jdbcType="VARCHAR" property="staffName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    im_id, staff_id, im_sender, imContent, im_receiver, im_receiver_cell, im_send_time,
+    im_send_status,
+  </sql>
+    <select id="getImList" parameterType="com.ems1.po.ImInfo" resultMap="BaseResultMap">
+        select a.*,b.staff_name
+        from im_info a, staff_info b
+        where a.staff_id = b.staff_id
+        <if test="imReceiverCell!=null and imReceiverCell!=''">
+            and a.im_receiver_cell=#{imReceiverCell}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select a.*,b.staff_name
+        from im_info a, staff_info b
+        where a.staff_id = b.staff_id
+        and a.im_id = #{imId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from im_info
+    where im_id = #{imId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ems1.po.ImInfo">
+    insert into im_info (im_id, staff_id, im_sender, 
+      im_content, im_receiver, im_receiver_cell, 
+      im_send_time, im_send_status)
+    values (#{imId,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{imSender,jdbcType=VARCHAR},
+      #{imContent,jdbcType=VARCHAR}, #{imReceiver,jdbcType=VARCHAR}, #{imReceiverCell,jdbcType=INTEGER}, 
+      #{imSendTime,jdbcType=TIMESTAMP}, #{imSendStatus,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ems1.po.ImInfo">
+        insert into im_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="imId != null">
+                im_id,
+            </if>
+            <if test="staffId != null">
+                staff_id,
+            </if>
+            <if test="imSender != null">
+                im_sender,
+            </if>
+            <if test="imContent != null">
+                im_content,
+            </if>
+            <if test="imReceiver != null">
+                im_receiver,
+            </if>
+            <if test="imReceiverCell != null">
+                im_receiver_cell,
+            </if>
+            <if test="imSendTime != null">
+                im_send_time,
+            </if>
+            <if test="imSendStatus != null">
+                im_send_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="imId != null">
+                #{imId,jdbcType=INTEGER},
+            </if>
+            <if test="staffId != null">
+                #{staffId,jdbcType=INTEGER},
+            </if>
+            <if test="imSender != null">
+                #{imSender,jdbcType=INTEGER},
+            </if>
+            <if test="imContent != null">
+                #{imContent,jdbcType=VARCHAR},
+            </if>
+            <if test="imReceiver != null">
+                #{imReceiver,jdbcType=VARCHAR},
+            </if>
+            <if test="imReceiverCell != null">
+                #{imReceiverCell,jdbcType=INTEGER},
+            </if>
+            <if test="imSendTime != null">
+                #{imSendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="imSendStatus != null">
+                #{imSendStatus,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.ImInfo">
+        update im_info
+        <set>
+            <if test="staffId != null">
+                staff_id = #{staffId,jdbcType=INTEGER},
+            </if>
+            <if test="imSender != null">
+                im_sender = #{imSender,jdbcType=VARCHAR},
+            </if>
+            <if test="imContent != null">
+                im_content = #{imContent,jdbcType=VARCHAR},
+            </if>
+            <if test="imReceiver != null">
+                im_receiver = #{imReceiver,jdbcType=VARCHAR},
+            </if>
+            <if test="imReceiverCell != null">
+                im_receiver_cell = #{imReceiverCell,jdbcType=INTEGER},
+            </if>
+            <if test="imSendTime != null">
+                im_send_time = #{imSendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="imSendStatus != null">
+                im_send_status = #{imSendStatus,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where im_id = #{imId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ems1.po.ImInfo">
+    update im_info
+    set staff_id = #{staffId,jdbcType=INTEGER},
+      im_sender = #{imSender,jdbcType=VARCHAR},
+      im_content = #{imContent,jdbcType=VARCHAR},
+      im_receiver = #{imReceiver,jdbcType=VARCHAR},
+      im_receiver_cell = #{imReceiverCell,jdbcType=INTEGER},
+      im_send_time = #{imSendTime,jdbcType=TIMESTAMP},
+      im_send_status = #{imSendStatus,jdbcType=VARCHAR}
+    where im_id = #{imId,jdbcType=INTEGER}
+  </update>
+</mapper>

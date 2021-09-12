@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ems1.student.mapper.StuGradeMapper">
+  <resultMap id="BaseResultMap" type="com.ems1.po.StuGrade">
+    <id column="stu_grade_id" jdbcType="INTEGER" property="stuGradeId" />
+    <result column="stu_id" jdbcType="INTEGER" property="stuId" />
+    <result column="staff_id" jdbcType="INTEGER" property="staffId" />
+    <result column="stu_grade_sub" jdbcType="VARCHAR" property="stuGradeSub" />
+    <result column="stu_grade" jdbcType="VARCHAR" property="stuGrade" />
+    <result column="stu_grade_time" jdbcType="TIMESTAMP" property="stuGradeTime" />
+    <result column="stu_grade_note" jdbcType="VARCHAR" property="stuGradeNote" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    stu_grade_id, stu_id, staff_id, stu_grade_sub, stu_grade, stu_grade_time, stu_grade_note
+  </sql>
+  <select id="getGradeList"  parameterType="com.ems1.po.StuGrade" resultMap="BaseResultMap">
+    select a.stu_name, b.*, c.staff_name
+    from student_info a, stu_grade b, staff_info c
+    where a.stu_id=b.stu_id
+    and c.staff_id=b.staff_id
+    <if test="stuName!=null and stuName!=''">
+      and stu_name=#{stuName}
+    </if>
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+    select a.stu_name, b.*, c.staff_name
+    from student_info a, stu_grade b, staff_info c
+    where a.stu_id=b.stu_id
+    and c.staff_id=b.staff_id
+    and  b.stu_grade_id = #{stuGradeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from stu_grade
+    where stu_grade_id = #{stuGradeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ems1.po.StuGrade">
+    insert into stu_grade (stu_grade_id, stu_id, staff_id, 
+      stu_grade_sub, stu_grade, stu_grade_time, 
+      stu_grade_note)
+    values (#{stuGradeId,jdbcType=INTEGER}, #{stuId,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, 
+      #{stuGradeSub,jdbcType=VARCHAR}, #{stuGrade,jdbcType=VARCHAR}, #{stuGradeTime,jdbcType=TIMESTAMP}, 
+      #{stuGradeNote,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ems1.po.StuGrade">
+    insert into stu_grade
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stuGradeId != null">
+        stu_grade_id,
+      </if>
+      <if test="stuId != null">
+        stu_id,
+      </if>
+      <if test="staffId != null">
+        staff_id,
+      </if>
+      <if test="stuGradeSub != null">
+        stu_grade_sub,
+      </if>
+      <if test="stuGrade != null">
+        stu_grade,
+      </if>
+      <if test="stuGradeTime != null">
+        stu_grade_time,
+      </if>
+      <if test="stuGradeNote != null">
+        stu_grade_note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stuGradeId != null">
+        #{stuGradeId,jdbcType=INTEGER},
+      </if>
+      <if test="stuId != null">
+        #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="stuGradeSub != null">
+        #{stuGradeSub,jdbcType=VARCHAR},
+      </if>
+      <if test="stuGrade != null">
+        #{stuGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="stuGradeTime != null">
+        #{stuGradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuGradeNote != null">
+        #{stuGradeNote,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ems1.po.StuGrade">
+    update stu_grade
+    <set>
+      <if test="stuId != null">
+        stu_id = #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        staff_id = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="stuGradeSub != null">
+        stu_grade_sub = #{stuGradeSub,jdbcType=VARCHAR},
+      </if>
+      <if test="stuGrade != null">
+        stu_grade = #{stuGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="stuGradeTime != null">
+        stu_grade_time = #{stuGradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuGradeNote != null">
+        stu_grade_note = #{stuGradeNote,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where stu_grade_id = #{stuGradeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ems1.po.StuGrade">
+    update stu_grade
+    set stu_id = #{stuId,jdbcType=INTEGER},
+      staff_id = #{staffId,jdbcType=INTEGER},
+      stu_grade_sub = #{stuGradeSub,jdbcType=VARCHAR},
+      stu_grade = #{stuGrade,jdbcType=VARCHAR},
+      stu_grade_time = #{stuGradeTime,jdbcType=TIMESTAMP},
+      stu_grade_note = #{stuGradeNote,jdbcType=VARCHAR}
+    where stu_grade_id = #{stuGradeId,jdbcType=INTEGER}
+  </update>
+</mapper>
