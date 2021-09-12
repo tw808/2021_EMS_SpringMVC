@@ -1,0 +1,16 @@
+package info:
+1. com.ems.utils: interface & public classes
+2. com.ems.po: model classes
+3. com.ems.system: system (staff, role, access, access change)
+   com.ems.system.controller: springmvc controller : staffController
+   com.ems.system.mapper: mybatis related db mappers
+4. com.ems.marketing: marketing
+   controller service mapper
+5. com.ems.recruitment: enrollment
+6. com.ems.sturdent: student
+7. com.ems.educational: admin
+8. com.ems.classinfo: classinfo
+9. com.ems.finance: finance
+
+all jsp pages in view folder
+all css, js, img in resources folder
